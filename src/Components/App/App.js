@@ -8,11 +8,20 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { Container } from "./App.styles";
 
 class App extends Component {
+  state = {
+    query: "",
+  };
+
+  getQuery = (value) => {
+    console.log("query: ", value);
+    this.setState({ query: value });
+  };
+
   render() {
     return (
       <Container>
-        <Searchbar />
-        <ImageGallery />
+        <Searchbar change={this.getQuery} />
+        <ImageGallery query={this.state.query} />
         <Button />
         <Loader
           type="Puff"
@@ -21,7 +30,7 @@ class App extends Component {
           width={100}
           timeout={3000}
         />
-        <Modal />
+        {/* <Modal /> */}
       </Container>
     );
   }

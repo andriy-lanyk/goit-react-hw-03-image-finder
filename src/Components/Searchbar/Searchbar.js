@@ -8,10 +8,24 @@ import {
 } from "./Searchbar.styles";
 
 class Searchbar extends Component {
+  state = {
+    value: "",
+  };
+
+  submitForm = (e) => {
+    e.preventDefault();
+    this.props.change(this.state.value);
+    this.setState({ value: "" });
+  };
+
+  handleChange = (e) => {
+    this.setState({ value: e.target.value });
+  };
+
   render() {
     return (
       <Header>
-        <Form>
+        <Form onSubmit={this.submitForm}>
           <FormBtn type="submit">
             <FormLabel>Search</FormLabel>
           </FormBtn>
@@ -20,8 +34,10 @@ class Searchbar extends Component {
             className="SearchForm-input"
             type="text"
             autocomplete="off"
-            autofocus
+            // autofocus
             placeholder="Search images and photos"
+            value={this.state.value}
+            onChange={this.handleChange}
           />
         </Form>
       </Header>
