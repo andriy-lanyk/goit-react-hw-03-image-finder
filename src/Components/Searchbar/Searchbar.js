@@ -14,12 +14,18 @@ class Searchbar extends Component {
 
   submitForm = (e) => {
     e.preventDefault();
+
+    if (this.state.value.trim() === "") {
+      // react-toastify вставить
+      return;
+    }
+
     this.props.change(this.state.value);
     this.setState({ value: "" });
   };
 
   handleChange = (e) => {
-    this.setState({ value: e.target.value });
+    this.setState({ value: e.target.value.toLowerCase() });
   };
 
   render() {
