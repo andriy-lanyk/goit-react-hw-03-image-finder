@@ -20,7 +20,7 @@ class ImageGalleryItem extends Component {
     this.setState({ modalWindow: true });
   };
 
-  toggleModal = (e) => {
+  toggleModal = () => {
     this.setState(({ modalWindow }) => ({ modalWindow: !modalWindow }));
   };
 
