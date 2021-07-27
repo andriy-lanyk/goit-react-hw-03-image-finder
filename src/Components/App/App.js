@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Searchbar from "../Searchbar";
 import ImageGallery from "../ImageGallery";
-import Modal from "../Modal";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { Container } from "./App.styles";
@@ -28,7 +27,6 @@ class App extends Component {
           width={100}
           timeout={3000}
         />
-        {/* <Modal /> */}
       </Container>
     );
   }
