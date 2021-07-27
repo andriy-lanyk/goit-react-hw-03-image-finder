@@ -13,6 +13,8 @@ class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.query !== this.props.query) {
+      console.log("this.props.query: ", this.props.query);
+      console.log("prevProps.query: ", prevProps.query);
       console.log("Первый ФЕТЧ");
       fetch(
         `https://pixabay.com/api/?q=${this.props.query}&page=${this.state.page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
@@ -22,22 +24,37 @@ class ImageGallery extends Component {
           this.setState({ photos: response.hits });
         });
     }
+
+    if (prevState.page !== this.state.page) {
+      console.log("Изменилась страница");
+      this.scrollToTop();
+    }
   }
 
   addPhotosOnButtonClick = () => {
-    this.setState({ page: this.state.page + 1 });
-    console.log("this.state.page: ", this.state.page);
+    let currentPage = this.state.page + 1;
+    this.setState({ page: currentPage });
     fetch(
-      `https://pixabay.com/api/?q=${this.props.query}&page=${this.state.page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
+      `https://pixabay.com/api/?q=${this.props.query}&page=${currentPage}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
     )
       .then((res) => res.json())
       .then((response) => {
         this.setState({ photos: [...this.state.photos, ...response.hits] });
+      })
+      .finally(() => {
+        this.scrollToTop();
       });
   };
 
+  scrollToTop = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
   render() {
-    console.log(this.state.photos);
+    console.log("render: ", this.state.page);
     return (
       <>
         <List>
