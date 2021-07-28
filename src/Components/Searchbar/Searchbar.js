@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   Header,
   Form,
@@ -50,5 +51,9 @@ class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propTypes = {
+  change: PropTypes.func.isRequired,
+};
 
 export default Searchbar;

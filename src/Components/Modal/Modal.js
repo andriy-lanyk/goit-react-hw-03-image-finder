@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 import { Overlay, ModalDiv, IMG } from "./Modal.styles";
 
@@ -37,5 +38,11 @@ class Modal extends Component {
     );
   }
 }
+
+Modal.propTypes = {
+  largeImg: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  closeModal: PropTypes.func.isRequired,
+};
 
 export default Modal;
