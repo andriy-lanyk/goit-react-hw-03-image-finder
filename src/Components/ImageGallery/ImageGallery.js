@@ -1,10 +1,9 @@
 import React, { Component } from "react";
+import fetchPhotos from "../FetchPhotos";
 import ImageGalleryItem from "../ImageGalleryItem";
 import Button from "../Button";
 import LoaderContainer from "../Loader";
 import { List } from "./ImageGallery.styles";
-
-const KEY = "22616220-eca5f4b2df7adfb59c540c753";
 
 class ImageGallery extends Component {
   state = {
@@ -15,26 +14,18 @@ class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.query !== this.props.query) {
+      const firstPage = 1;
       this.setState({ isLoader: true, page: 1 });
-      fetch(
-        `https://pixabay.com/api/?q=${
-          this.props.query
-        }&page=${1}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-      )
-        .then((res) => res.json())
-        .then((response) => {
-          this.setState({ photos: response.hits, isLoader: false });
-        });
+      fetchPhotos(this.props.query, firstPage).then((response) => {
+        this.setState({ photos: response.hits, isLoader: false });
+      });
     }
   }
 
   addPhotosOnButtonClick = () => {
     let nextPage = this.state.page + 1;
     this.setState({ page: nextPage, isLoader: true });
-    fetch(
-      `https://pixabay.com/api/?q=${this.props.query}&page=${nextPage}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    )
-      .then((res) => res.json())
+    fetchPhotos(this.props.query, nextPage)
       .then((response) => {
         this.setState({
           photos: [...this.state.photos, ...response.hits],
